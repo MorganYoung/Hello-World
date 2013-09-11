@@ -16,10 +16,10 @@ public class BaseSerializable {
 
 	public static void main(String[] args) throws Exception {
 
-//		simpleWrite();
-//		simpleRead();
-		arrayWrite();
-		arrayRead();
+		simpleWrite();
+		simpleRead();
+//		arrayWrite();
+//		arrayRead();
 
 	}
 
@@ -53,7 +53,7 @@ public class BaseSerializable {
 	}
 
 	public static void simpleRead() throws Exception {
-		ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("D:/serializable/user.bin"));
+		ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("D:/serializable/user_p.bin"));
 
 		User userObj = (User) objectInputStream.readObject();
 
@@ -66,8 +66,10 @@ public class BaseSerializable {
 		user.setName("morgan");
 		user.setAge(22);
 		user.setBirthday(new Date());
+		user.setIdCardNum("1234567890");
+		user.setPassword("123456");
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("D:/serializable/user.bin"));
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("D:/serializable/user_p.bin"));
 		objectOutputStream.writeObject(user);
 		objectOutputStream.flush();
 		objectOutputStream.close();

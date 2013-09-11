@@ -1,8 +1,9 @@
 package java_explore.serializable.model;
 
-import java.io.Serializable;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  * User: morgan
@@ -13,11 +14,21 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 123456L;
 
+	private static final ObjectStreamField[] serialPersistentFields = {
+			new ObjectStreamField("name",String.class),
+			new ObjectStreamField("birthday",Date.class)
+	};
+
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private String name;
 	private Integer age;
 	private Date birthday;
+
+
+	private transient String password;
+
+	private transient String idCardNum;
 
 	public String getName() {
 		return name;
@@ -43,8 +54,39 @@ public class User implements Serializable {
 		this.birthday = birthday;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getIdCardNum() {
+		return idCardNum;
+	}
+
+	public void setIdCardNum(String idCardNum) {
+		this.idCardNum = idCardNum;
+	}
+
+	private void writeObject( ObjectOutputStream out ) throws IOException {
+		out.defaultWriteObject();
+		out.writeUTF("hello !!!");
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		String value = in.readUTF();
+		System.out.println(value);
+	}
+
+
 	@Override
 	public String toString() {
-		return "name:"+this.name+"\tage:"+this.age+"\tbirthday:"+format.format(birthday);
+		return "name:"+this.name+"\tage:"+this.age+"\tbirthday:"+
+				(this.birthday == null ? "null" : format.format(birthday)) +
+				"\tpassword:"+this.password+"\tidCardNum:"+this.idCardNum;
+
 	}
 }
