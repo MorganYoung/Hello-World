@@ -1,0 +1,6 @@
+/.idea
+/java_pid2984.hprof.analysis
+/target
+/*.hprof
+/*.html
+/*.iml
